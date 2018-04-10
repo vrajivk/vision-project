@@ -56,7 +56,7 @@ class Images(Callback):
     def on_epoch_end(self, epoch, logs):
         labels = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
         indices = np.random.randint(self.validation_data[0].shape[0], size=8)
-        test_data = self.validation_data[0][indices]
+        test_data = self.validation_data[0][indices] * 255
         pred_data = self.model.predict(test_data)
         run.history.row.update(
             {
