@@ -14,7 +14,7 @@ run = wandb.init()
 config = run.config
 # parameters
 config.batch_size = 32
-config.num_epochs = 5
+config.num_epochs = 100
 input_shape = (48, 48, 1)
 
 
