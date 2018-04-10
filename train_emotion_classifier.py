@@ -70,8 +70,8 @@ class Images(Callback):
             }
         )
 
-train_faces = train_faces/255
-val_faces = val_faces/255
+train_faces = train_faces/255.0
+val_faces = val_faces/255.0
 
 model = Sequential()
 
