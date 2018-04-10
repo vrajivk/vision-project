@@ -1,4 +1,4 @@
-from keras.layers import Dense, Flatten
+from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Dropout
 from keras.models import Sequential
 from keras.callbacks import Callback
 import pandas as pd
@@ -72,9 +72,23 @@ class Images(Callback):
 
 
 model = Sequential()
-model.add(Flatten(input_shape=input_shape))
+
+model.add(
+    Conv2D(32, (3, 3), padding="same", input_shape=train_faces.shape[1:], activation="relu")
+)
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+model.add(
+    Conv2D(64, (3, 3), padding="same", activation="relu")
+)
+model.add(Dropout(0.25))
+model.add(Flatten())
+model.add(Dense(100, activation="relu"))
+model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation="softmax"))
 
+
+model.summary()
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 model.fit(
