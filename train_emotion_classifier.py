@@ -7,6 +7,8 @@ import numpy as np
 import cv2
 from PIL import Image
 from wandb.wandb_keras import WandbKerasCallback
+from keras.callbacks import EarlyStopping
+
 
 run = wandb.init()
 config = run.config
@@ -81,7 +83,7 @@ model.fit(
     batch_size=config.batch_size,
     epochs=config.num_epochs,
     verbose=1,
-    callbacks=[Images(), wandb_callback],
+    callbacks=[Images(), wandb_callback, EarlyStopping(monitor="val_acc", min_delta=0.001, patience=3, verbose=1)],
     validation_data=(val_faces, val_emotions),
 )
 
